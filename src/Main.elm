@@ -60,29 +60,56 @@ view model=
   { title= "jetzt"
   , body=
       [ Ui.layout []
-          (Ui.row
-            [ Ui.height Ui.fill
-            , Ui.width Ui.fill
-            , UiBg.gradient
-                { angle= 0
-                , steps=
-                    [ Ui.rgb 0 0.06 0.05
-                    , Ui.rgb 0 0 0.02
-                    , Ui.rgb 0 0 0
-                    ]
-                }
-            , Ui.paddingXY 48 88
-            , Ui.spacing 48
+          (Ui.column
+            [ Ui.width Ui.fill
+            , Ui.height Ui.fill
+            , UiBg.color (Ui.rgb 0 0.03 0.03)
             ]
-            [ viewHeader
-            , Ui.column [ Ui.width Ui.fill ]
-                [ viewIntroduction
-                , Ui.image []
-                    { src= "https://media.istockphoto.com/photos/cash-money-picture-id173575156?k=6&m=173575156&s=612x612&w=0&h=1r1Q_6l66i5qHsm6zMEJYoDPhU83QsKms6l30XQXMws="
-                    , description= "image of money"
-                    }
-                , Ui.row []
-                    [ viewDonateInvest model
+            [ Ui.el
+                [ Ui.height (Ui.px 36)
+                , Ui.paddingXY 10 0
+                , UiFont.color (Ui.rgb 0.2 0.2 0.2)
+                ]
+                (Ui.el [ Ui.centerY ] (Ui.text "🔐 secure"))
+            , Ui.row
+                [ Ui.height Ui.fill
+                , Ui.width Ui.fill
+                ]
+                [ Ui.el
+                    [ Ui.height Ui.fill
+                    , Ui.paddingXY 0 200
+                    , Ui.width (Ui.fillPortion 10)
+                    , UiBg.gradient
+                        { angle= 0
+                        , steps=
+                            [ Ui.rgb 0 0.06 0.05
+                            , Ui.rgb 0 0 0.02
+                            , Ui.rgb 0 0 0
+                            ]
+                        }
+                    ]
+                    viewHeader
+                , Ui.column
+                    [ Ui.height Ui.fill
+                    , Ui.width (Ui.fillPortion 11)
+                    , Ui.paddingXY 88 178
+                    , UiBg.gradient
+                        { angle= 180
+                        , steps=
+                            [ Ui.rgb 0 0.06 0.05
+                            , Ui.rgb 0 0 0.02
+                            , Ui.rgb 0 0 0
+                            ]
+                        }
+                    ]
+                    [ viewIntroduction
+                    , Ui.image []
+                        { src= "https://media.istockphoto.com/photos/cash-money-picture-id173575156?k=6&m=173575156&s=612x612&w=0&h=1r1Q_6l66i5qHsm6zMEJYoDPhU83QsKms6l30XQXMws="
+                        , description= "image of money"
+                        }
+                    , Ui.row []
+                        [ viewDonateInvest model
+                        ]
                     ]
                 ]
             ]
