@@ -11519,12 +11519,22 @@ var $mdgriffith$elm_ui$Element$el = F2(
 				_List_fromArray(
 					[child])));
 	});
+var $mdgriffith$elm_ui$Element$Font$family = function (families) {
+	return A2(
+		$mdgriffith$elm_ui$Internal$Model$StyleClass,
+		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
+		A2(
+			$mdgriffith$elm_ui$Internal$Model$FontFamily,
+			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
+			families));
+};
 var $mdgriffith$elm_ui$Internal$Model$Text = function (a) {
 	return {$: 'Text', a: a};
 };
 var $mdgriffith$elm_ui$Element$text = function (content) {
 	return $mdgriffith$elm_ui$Internal$Model$Text(content);
 };
+var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
 var $author$project$Main$viewDonateInvest = function (model) {
 	return A2(
 		$mdgriffith$elm_ui$Element$column,
@@ -11570,7 +11580,7 @@ var $author$project$Main$viewDonateInvest = function (model) {
 								A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1))
 							]),
 						$mdgriffith$elm_ui$Element$text(
-							$elm$core$String$fromInt(model.investmentCounter) + '€  bisher'))
+							'💎: ' + ($elm$core$String$fromInt(model.investmentCounter) + '€  bisher')))
 					])),
 				A2(
 				$mdgriffith$elm_ui$Element$row,
@@ -11605,10 +11615,15 @@ var $author$project$Main$viewDonateInvest = function (model) {
 						_List_fromArray(
 							[
 								$mdgriffith$elm_ui$Element$Font$color(
-								A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1))
+								A3($mdgriffith$elm_ui$Element$rgb, 1, 1, 1)),
+								$mdgriffith$elm_ui$Element$Font$family(
+								_List_fromArray(
+									[
+										$mdgriffith$elm_ui$Element$Font$typeface('Swadasee')
+									]))
 							]),
 						$mdgriffith$elm_ui$Element$text(
-							$elm$core$String$fromInt(model.donationCounter) + '€  bisher'))
+							'🎁: ' + ($elm$core$String$fromInt(model.donationCounter) + '€  bisher')))
 					]))
 			]));
 };
@@ -11617,15 +11632,6 @@ var $mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
 };
 var $mdgriffith$elm_ui$Internal$Model$CenterX = {$: 'CenterX'};
 var $mdgriffith$elm_ui$Element$centerX = $mdgriffith$elm_ui$Internal$Model$AlignX($mdgriffith$elm_ui$Internal$Model$CenterX);
-var $mdgriffith$elm_ui$Element$Font$family = function (families) {
-	return A2(
-		$mdgriffith$elm_ui$Internal$Model$StyleClass,
-		$mdgriffith$elm_ui$Internal$Flag$fontFamily,
-		A2(
-			$mdgriffith$elm_ui$Internal$Model$FontFamily,
-			A3($elm$core$List$foldl, $mdgriffith$elm_ui$Internal$Model$renderFontClassName, 'ff-', families),
-			families));
-};
 var $mdgriffith$elm_ui$Element$Font$hairline = A2($mdgriffith$elm_ui$Internal$Model$Class, $mdgriffith$elm_ui$Internal$Flag$fontWeight, $mdgriffith$elm_ui$Internal$Style$classes.textThin);
 var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 	return A2(
@@ -11633,7 +11639,6 @@ var $mdgriffith$elm_ui$Element$Font$size = function (i) {
 		$mdgriffith$elm_ui$Internal$Flag$fontSize,
 		$mdgriffith$elm_ui$Internal$Model$FontSize(i));
 };
-var $mdgriffith$elm_ui$Element$Font$typeface = $mdgriffith$elm_ui$Internal$Model$Typeface;
 var $author$project$Main$viewHeader = A2(
 	$mdgriffith$elm_ui$Element$column,
 	_List_fromArray(

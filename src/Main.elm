@@ -156,8 +156,15 @@ viewDonateInvest model=
                     ]
                     (Ui.text "Investieren")
               }
-          , Ui.el [ UiFont.color (Ui.rgb 1 1 1) ]
-              (Ui.text ((String.fromInt model.investmentCounter)++"€  bisher")
+          , Ui.el
+              [ UiFont.color (Ui.rgb 1 1 1) 
+              , UiFont.family [ UiFont.typeface "Swadasee" ]
+              ]
+              (Ui.text 
+                ("💎: "
+                ++(String.fromInt model.investmentCounter)
+                ++"€  bisher"
+                )
               )
         ]
     , Ui.row [ Ui.spacing 12 ]
@@ -173,8 +180,15 @@ viewDonateInvest model=
                   ]
                   (Ui.text "Spenden")
             }
-        , Ui.el [ UiFont.color (Ui.rgb 1 1 1) ]
-            (Ui.text ((String.fromInt model.donationCounter)++"€  bisher")
+        , Ui.el
+            [ UiFont.color (Ui.rgb 1 1 1) 
+            , UiFont.family [ UiFont.typeface "Swadasee" ]
+            ]
+            (Ui.text
+              ("🎁: "
+              ++(String.fromInt model.donationCounter)
+              ++"€  bisher"
+              )
             )
         ]
     ]
