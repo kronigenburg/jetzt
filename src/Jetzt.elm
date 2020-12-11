@@ -130,14 +130,14 @@ viewHeader=
         , UiFont.family [ UiFont.typeface "Ubuntu Mono" ]
         , Ui.centerX
         ]
-        (Ui.text "Hneck")
+        (Ui.text "Kronigenburg")
     , Ui.el
         [ UiFont.size 20
         , UiFont.color (Ui.rgb 0.5 0.8 0.1)
         , UiFont.hairline
         , Ui.centerX
         ]
-        (Ui.text "the  e s s e n c e")
+        (Ui.text "👑 the  e s s e n c e")
     ]
 
 viewIntroduction: Ui.Element msg
