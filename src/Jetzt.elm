@@ -7,6 +7,8 @@ import Element.Font as UiFont
 
 import Browser
 import Html exposing (Html)
+import Coins
+import Coins
 
 
 main: Program () Model Msg
@@ -15,25 +17,33 @@ main=
     { init= init
     , view= view
     , update= update
-    , subscriptions= \_-> Sub.none
+    , subscriptions= subscriptions
     }
 
 type alias Model=
   { investmentCounter: Int
   , donationCounter: Int
+  , coins: Coins.Model
   }
 
 type Msg=
   ClickDonate
   | ClickInvest
+  | CoinsMsg Coins.Msg
 
-init: () ->( Model, Cmd msg )
+init: () ->( Model, Cmd Msg )
 init flags=
   ( { investmentCounter= 0
     , donationCounter= 0
+    , coins= Coins.initModel
     }
-  , Cmd.none
+  , Coins.initCmd |>Cmd.map CoinsMsg
   )
+
+subscriptions: Model ->Sub Msg
+subscriptions model=
+  Coins.subscriptions model.coins
+  |>Sub.map CoinsMsg
 
 update: Msg ->Model ->( Model, Cmd Msg )
 update msg model =
@@ -41,18 +51,23 @@ update msg model =
     ClickDonate->
       ( {model
         | donationCounter=
-            1+ round ((toFloat model.donationCounter)  * 1.5)
+            1 +round ((toFloat model.donationCounter)  * 1.6)
         }
       , Cmd.none
       )
 
     ClickInvest->
-      ( {model
+      update (CoinsMsg Coins.Random)
+        {model
         | investmentCounter=
-            1+ round ((toFloat model.investmentCounter)  * 1.5)
+            1 +round ((toFloat model.investmentCounter)  * 1.6)
         }
-      , Cmd.none
-      )
+    
+    CoinsMsg coinsMsg->
+      Coins.update coinsMsg model.coins
+      |>Tuple.mapBoth
+          (\coinsModel-> {model | coins= coinsModel })
+          (Cmd.map CoinsMsg)
 
 
 view: Model ->Browser.Document Msg
@@ -63,14 +78,21 @@ view model=
           (Ui.column
             [ Ui.width Ui.fill
             , Ui.height Ui.fill
-            , UiBg.color (Ui.rgb 0 0.03 0.03)
+            , Ui.behindContent
+                (Ui.html
+                  (Coins.view model.coins
+                  |>Html.map CoinsMsg
+                  )
+                )
             ]
             [ Ui.el
                 [ Ui.height (Ui.px 36)
                 , Ui.paddingXY 10 0
                 , UiFont.color (Ui.rgb 0.2 0.2 0.2)
                 ]
-                (Ui.el [ Ui.centerY ] (Ui.text "🔐 secure"))
+                (Ui.el [ Ui.centerY, UiFont.color (Ui.rgb 1 1 1) ]
+                  (Ui.text "🔐 secure")
+                )
             , Ui.row
                 [ Ui.height Ui.fill
                 , Ui.width Ui.fill
@@ -82,9 +104,9 @@ view model=
                     , UiBg.gradient
                         { angle= 0
                         , steps=
-                            [ Ui.rgb 0 0.06 0.05
-                            , Ui.rgb 0 0 0.02
-                            , Ui.rgb 0 0 0
+                            [ Ui.rgba 0 0.06 0.05 0.2
+                            , Ui.rgba 0 0 0.02 0.2
+                            , Ui.rgba 0 0 0 0.2
                             ]
                         }
                     ]
@@ -96,9 +118,9 @@ view model=
                     , UiBg.gradient
                         { angle= 180
                         , steps=
-                            [ Ui.rgb 0 0.06 0.05
-                            , Ui.rgb 0 0 0.02
-                            , Ui.rgb 0 0 0
+                            [ Ui.rgba 0 0.06 0.05 0.4
+                            , Ui.rgba 0 0 0.02 0.4
+                            , Ui.rgba 0 0 0 0.4
                             ]
                         }
                     ]
@@ -107,9 +129,7 @@ view model=
                         { src= "https://media.istockphoto.com/photos/cash-money-picture-id173575156?k=6&m=173575156&s=612x612&w=0&h=1r1Q_6l66i5qHsm6zMEJYoDPhU83QsKms6l30XQXMws="
                         , description= "image of money"
                         }
-                    , Ui.row []
-                        [ viewDonateInvest model
-                        ]
+                    , viewDonateInvest model
                     ]
                 ]
             ]
@@ -117,7 +137,7 @@ view model=
       ]
   }
 
-viewHeader: Ui.Element msg
+viewHeader: Ui.Element Msg
 viewHeader=
   Ui.column
     [ Ui.width Ui.fill
